@@ -25,14 +25,14 @@ const Navbar = () => {
     <nav className="nb">
       <div className="nb-container">
         <div className="nb-brand">
-          <Link to="/" className="nb-logo">
+          <Link to="/home" className="nb-logo">
             <span className="logo-airline">XYZ</span>
             <span className="logo-text">Airline</span>
           </Link>
         </div>
 
         <div className="nb-links">
-          <Link to="/" className="nav-link">Home</Link>
+          <Link to="/home" className="nav-link">Home</Link>
           <Link to="flights" className="nav-link">Find Flights</Link>
 
           {

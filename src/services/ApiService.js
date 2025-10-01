@@ -178,10 +178,10 @@ export default class ApiService {
     return resp.data;
   }
 
-  static async searchForFlight(departureAirportIataCode, arrivalAirportIataCode, departureDate) {
+  static async searchForFlight(departureIataCode, arrivalIataCode, departureDate) {
     const params = {
-      departureAirportIataCode: departureAirportIataCode,
-      arrivalAirportIataCode: arrivalAirportIataCode,
+      departureIataCode: departureIataCode,
+      arrivalIataCode: arrivalIataCode,
       departureDate: departureDate
     };
     const resp = await axios.get(`${this.BASE_URL}/flights/search`, {
