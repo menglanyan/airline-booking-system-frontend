@@ -11,7 +11,7 @@ export const RouteGuard = ({element: Component, allowedRoles}) => {
     // Deny access if no roles are explicitly allowed
     hasRequiredRole = false;
   } else {
-    hasRequiredRole= allowedRoles.some(role => {
+    hasRequiredRole = allowedRoles.some(role => {
 
       //Check if the user has the mactching roles needed to access the route
       if (role === 'ADMIN') {
