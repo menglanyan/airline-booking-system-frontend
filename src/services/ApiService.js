@@ -51,7 +51,7 @@ export default class ApiService {
   }
 
   static getHeader() {
-    const token = this.getToken;
+    const token = this.getToken();
     return {
       Authorization: `Bearer ${token}`,
       "Content-Type": "application/json"
