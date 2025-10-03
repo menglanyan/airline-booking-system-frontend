@@ -10,6 +10,12 @@ import UpdateProfilePage from "./components/profile/UpdateProfilePage";
 import BookingPage from "./components/pages/BookingPage";
 import BookingDetailsPage from "./components/pages/BookingDetailsPage";
 import { RouteGuard } from "./services/RouteGuard";
+import AdminDashboardPage from "./components/admin/AdminDashboardPage";
+import AdminBookingDetailsPage from "./components/admin/AdminBookingDetailsPage";
+import AdminFlightDetailsPage from "./components/admin/AdminFlightDetailsPage";
+import AddEditAirportPage from "./components/admin/AddEditAirportPage";
+import AddFlightPage from "./components/admin/AddFlightPage";
+import SpecialRegistration from "./components/admin/SpecialRegistration";
 
 
 
@@ -21,6 +27,7 @@ function App() {
 
       <div className="content">
         <Routes>
+          
           {/* AUTH PAGES */}
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage />} />
@@ -36,6 +43,15 @@ function App() {
           <Route path="/booking/:id" element={<RouteGuard allowedRoles={["CUSTOMER", "ADMIN", "PILOT"]} element={<BookingDetailsPage />}/>} />
 
           {/* ADMIN & PILOT PAGES */}
+          <Route path="/admin" element={<RouteGuard allowedRoles={["ADMIN", "PILOT"]} element={<AdminDashboardPage />}/>} />
+          <Route path="/admin/booking/:id" element={<RouteGuard allowedRoles={["ADMIN", "PILOT"]} element={<AdminBookingDetailsPage />}/>} />
+          <Route path="/admin/flight/:id" element={<RouteGuard allowedRoles={["PILOT"]} element={<AdminFlightDetailsPage />}/>} />
+
+          <Route path="/add-airport" element={<RouteGuard allowedRoles={["ADMIN"]} element={<AddEditAirportPage />}/>} />
+          <Route path="/edit-airport/:id" element={<RouteGuard allowedRoles={["ADMIN"]} element={<AddEditAirportPage />}/>} />
+          <Route path="/add-flight" element={<RouteGuard allowedRoles={["ADMIN", "PILOT"]} element={<AddFlightPage />}/>} />
+
+          <Route path="/special-register" element={<RouteGuard allowedRoles={["ADMIN"]} element={<SpecialRegistration />}/>} />
 
           {/* Fallback for unmatched routes */}
           <Route path="*" element={<Navigate to="/home"/>}/>
