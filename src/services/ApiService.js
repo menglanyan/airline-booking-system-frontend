@@ -199,4 +199,11 @@ export default class ApiService {
     const resp = await axios.get(`${this.BASE_URL}/flights/countries`);
     return resp.data;
   }
+
+  static async getMyFlights() {
+    const resp = await axios.get(`${this.BASE_URL}/flights/my-flights`, {
+      headers: this.getHeader()
+    });
+    return resp.data;
+  }
 }

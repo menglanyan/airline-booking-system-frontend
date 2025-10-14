@@ -16,6 +16,7 @@ import AdminFlightDetailsPage from "./components/admin/AdminFlightDetailsPage";
 import AddEditAirportPage from "./components/admin/AddEditAirportPage";
 import AddFlightPage from "./components/admin/AddFlightPage";
 import SpecialRegistration from "./components/admin/SpecialRegistration";
+import PilotDashboardPage from "./components/pages/PilotDashboardPage";
 
 
 
@@ -43,16 +44,20 @@ function App() {
           <Route path="/booking/:id" element={<RouteGuard allowedRoles={["CUSTOMER", "ADMIN", "PILOT"]} element={<BookingDetailsPage />}/>} />
 
           {/* ADMIN & PILOT PAGES */}
-          <Route path="/admin" element={<RouteGuard allowedRoles={["ADMIN", "PILOT"]} element={<AdminDashboardPage />}/>} />
+          <Route path="/admin" element={<RouteGuard allowedRoles={["ADMIN"]} element={<AdminDashboardPage />}/>} />
           <Route path="/admin/booking/:id" element={<RouteGuard allowedRoles={["ADMIN", "PILOT"]} element={<AdminBookingDetailsPage />}/>} />
-          <Route path="/admin/flight/:id" element={<RouteGuard allowedRoles={["PILOT"]} element={<AdminFlightDetailsPage />}/>} />
+          <Route path="/admin/flight/:id" element={<RouteGuard allowedRoles={["ADMIN", "PILOT"]} element={<AdminFlightDetailsPage />}/>} />
+          <Route path="/special-register" element={<RouteGuard allowedRoles={["ADMIN"]} element={<SpecialRegistration />}/>} />
 
           <Route path="/add-airport" element={<RouteGuard allowedRoles={["ADMIN"]} element={<AddEditAirportPage />}/>} />
           <Route path="/edit-airport/:id" element={<RouteGuard allowedRoles={["ADMIN"]} element={<AddEditAirportPage />}/>} />
-          <Route path="/add-flight" element={<RouteGuard allowedRoles={["ADMIN", "PILOT"]} element={<AddFlightPage />}/>} />
+          <Route path="/add-flight" element={<RouteGuard allowedRoles={["ADMIN"]} element={<AddFlightPage />}/>} />
 
-          <Route path="/special-register" element={<RouteGuard allowedRoles={["ADMIN"]} element={<SpecialRegistration />}/>} />
 
+
+          <Route path="/pilot" element={<RouteGuard allowedRoles={["PILOT"]} element={<PilotDashboardPage />}/>} />
+
+        
           {/* Fallback for unmatched routes */}
           <Route path="*" element={<Navigate to="/home"/>}/>
  
