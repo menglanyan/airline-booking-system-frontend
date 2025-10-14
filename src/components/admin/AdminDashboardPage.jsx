@@ -5,7 +5,7 @@ import ApiService from "../../services/ApiService";
 
 const AdminDashboardPage = () => {
 
-  const { ErrorDisplay, SuccessDisplay, showError, showSuccess } = useMessage();
+  const { ErrorDisplay, SuccessDisplay, showError } = useMessage();
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("bookings");
   const [bookings, setBookings] = useState([]);
@@ -87,6 +87,12 @@ const AdminDashboardPage = () => {
             onClick={() => navigate("/add-airport")}
           >
             Add New Airport
+          </button>
+          <button
+            className={activeTab === "register-user" ? "active" : ""}
+            onClick={() => navigate("/special-register")}
+          >
+            Register User
           </button>
         </div>
 
