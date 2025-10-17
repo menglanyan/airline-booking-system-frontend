@@ -1,70 +1,141 @@
-# Getting Started with Create React App
+# ✈️ Airline Booking System — Fullstack (Spring Boot + React + MySQL)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A comprehensive airline management platform enabling **flight booking, scheduling, and role-based operations** for customers, pilots, and administrators. Includes automated email notifications for user register and booking.    
+The backend is built with **Spring Boot** for scalability and security, while the frontend (React) offers an intuitive and responsive interface — all powered by **MySQL** and **JWT authentication**.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## 🧠 Project Overview
 
-### `npm start`
+### 🧩 Backend — Powered by Spring Boot
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+**🔹 Database Architecture**  
+Designed a relational database in **MySQL** with structured entities for **Users**, **Roles**, **Flights**, **Bookings**, and **Airports**.    
+Established **one-to-many** and **many-to-one** relationships to maintain data integrity and ensure efficient lookups for flight and booking datasets.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+**🔹 RESTful API Development**  
+Developed modular REST endpoints for handling **authentication, user management, bookings, and flight operations**.  
+Used a standardized response structure (`Response<T>`) across all endpoints for better API consistency.
 
-### `npm test`
+**🔹 Security and Authentication**  
+Implemented **Spring Security** with **JWT** for stateless authentication.  
+Each user is authenticated via token-based and role-based access control restricting access to sensitive endpoints.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+**🔹 Role-Based Access Control**  
+Three main roles are defined:
+- **Customer:** Can search and book flights.
+- **Pilot:** Can view assigned flights and update flight status.
+- **Admin:** Has full access to manage users, flights, airports, and bookings.
 
-### `npm run build`
+**🔹 Email Notifications**  
+Integrated **JavaMailSender** to deliver automated transactional emails, such as:
+- Welcome emails after registration
+- Booking confirmations
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### 🎨 Frontend — Built with React
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+**🔹 Role-Based User Interface**  
+Designed an intuitive and responsive interface for different user roles:
+- **Customer**: Search and book flights, manage bookings, update personal profile
+- **Pilot**: View assigned flights and update flight statuses
+- **Admin**: Manage all flights, airports, users, and assign pilot roles
 
-### `npm run eject`
+**🔹 Real-Time Flight Search**  
+Integrated API-based flight filtering by **airport**, **status**, **date**, and **time**, allowing customers to easily find available flights
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+**🔹 API Integration**  
+Seamlessly connected to the Spring Boot backend using **Axios** for secure data transactions
+Implemented interceptors to attach JWT tokens for authorized requests
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+**🔹 Authentication & Security**
+Implemented **JWT-based authentication** with automatic token management and logout on expiration  
+Restricted route access through **React Router DOM** and role-specific guards
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+**🔹 Modern Design**
+Developed dynamic dashboards that adapt to each user’s role and permissions
+Responsive layout with reusable React components for naviagtion bar, footer, and message display
+Integrated notification and toast messages for user experience
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+---
 
-## Learn More
+## 🚀 Features
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### 👤 User & Role Management
+- Secure user registration and login via **JWT**
+- Role-based permissions (**Customer**, **Admin**, **Pilot**)
+- Admin can register users to assign roles
+- Secure password hashing with **Spring Security**
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### ✈️ Flight Management
+- Create, update, and delete flights
+- Assign pilots to flights
+- Filter flights by airport, date, and status
+- Public endpoints for flight browsing (unauthenticated)
 
-### Code Splitting
+### 🧾 Booking Management
+- Customers can **book** and **view** their bookings
+- Unique booking reference automatically generated
+- Admins can access and update all bookings
+- Linked flight and passenger details per booking
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### 👨‍✈️ Pilot Dashboard
+- Pilots can view their assigned flights only
+- Flights are ordered by departure time
+- Access restricted via role validation
 
-### Analyzing the Bundle Size
+### 📨 Email Notifications
+- Welcome and booking confirmation emails
+- Modular service class for easy extension
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+---
 
-### Making a Progressive Web App
+## 🖥️ Frontend Overview
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### 💻 Tech Stack
+| Area | Technology |
+|------|-------------|
+| **Language** | JavaScript, HTML, CSS |
+| **Framework** | React 19 |
+| **Routing** | React Router DOM |
+| **HTTP Client** | Axios |
+| **State Management** | React Hooks (`useState`, `useEffect`) |
+| **Build Tool** | Create React App |
 
-### Advanced Configuration
+### 🧩 Core Features
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+#### 🔐 Authentication & Authorization
+- Secure **JWT-based authentication** integrated with the backend API
+- Role-aware interface: navigation menus and routes render conditionally based on user role (**CUSTOMER, PILOT, ADMIN**)
+- Axios interceptor automatically attaches  
+  `Authorization: Bearer <token>` to authenticated requests
+- Automatic logout on token expiration or invalid credentials
 
-### Deployment
+### 🧭 Routing
+- **Public Routes:** Home (Flight Search), Login, Register
+- **Private Routes:** Dashboard, My Bookings, Profile
+- **Role-Based Routes**:
+  - **Pilot**: My Flights
+  - **Admin**: Manage Flights, Airports, Bookings, and Users
+- Route guards ensure unauthorized users cannot access protected pages
+- nvalid or expired sessions automatically redirect to /login
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+### ✈️ Flight & Booking Management
+- **Customers**:
+  - Search for flights by origin, destination, and date
+  - Book flights with multiple passengers in one transaction
+  - View and manage past bookings under “My Bookings”
 
-### `npm run build` fails to minify
+- **Pilots**:
+	-	Access assigned flights via “My Flights” dashboard
+	-	Update flight statuses
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- **Admins**:
+	-	Add and manage flights and airports and view all bookings
+	-	Assign pilots to flights and create special-role users
+
+---
+
+### 🔗 Backend Repository
+**👉 [airline-booking-system-backend](https://github.com/menglanyan/airline-booking-system-backend)**
