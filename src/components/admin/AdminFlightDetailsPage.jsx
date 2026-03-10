@@ -24,7 +24,7 @@ const AdminFlightDetailsPage = () => {
       
       const [flightRes, bookingsRes] = await Promise.all([
         ApiService.getFlightById(id),
-        ApiService.getAllBookings()
+        ApiService.getAllBookings(0, 1000)
       ]);
 
       setFlight(flightRes.data);

@@ -2607,6 +2607,38 @@
 
 
 
+/* Pagination Styles */
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.pagination-button {
+  background-color: #1a237e;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  margin: 0 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.pagination-button:hover {
+  background-color: #303f9f;
+}
+
+.pagination-button:disabled {
+  background-color: #d3d3d3;
+  cursor: not-allowed;
+}
+
+.pagination-page-label {
+  margin: 0 12px;
+  font-weight: bold;
+  color: #333;
+}
 
 
 

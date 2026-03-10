@@ -132,8 +132,8 @@ export default class ApiService {
     return resp.data;
   }
 
-  static async getAllBookings() {
-    const resp = await axios.get(`${this.BASE_URL}/bookings`, {
+  static async getAllBookings(page, size) {
+    const resp = await axios.get(`${this.BASE_URL}/bookings?page=${page}&size=${size}`, {
       headers: this.getHeader()
     });
     return resp.data;
@@ -166,8 +166,8 @@ export default class ApiService {
     return resp.data;
   }
 
-  static async getAllFlights() {
-    const resp = await axios.get(`${this.BASE_URL}/flights`);
+  static async getAllFlights(page, size) {
+    const resp = await axios.get(`${this.BASE_URL}/flights?page=${page}&size=${size}`);
     return resp.data;
   }
 
