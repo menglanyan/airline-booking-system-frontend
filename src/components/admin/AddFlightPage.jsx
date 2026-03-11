@@ -13,6 +13,7 @@ const AddFlightPage = () => {
     departureTime: "",
     arrivalTime: "",
     basePrice: "",
+    totalSeats: "",
     pilotId: ""
   });
 
@@ -69,6 +70,7 @@ const AddFlightPage = () => {
         departureTime: flight.departureTime,
         arrivalTime: flight.arrivalTime,
         basePrice: parseFloat(flight.basePrice),
+        totalSeats: parseInt(flight.totalSeats),
         pilotId: parseInt(flight.pilotId)
       };
 
@@ -176,6 +178,20 @@ const AddFlightPage = () => {
               onChange={handleChange}
               min="0"
               step="0.01"
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="totalSeats">Total Seats</label>
+            <input
+              type="number"
+              id="totalSeats"
+              name="totalSeats"
+              value={flight.totalSeats}
+              onChange={handleChange}
+              min="10"
+              step="1"
               required
             />
           </div>
