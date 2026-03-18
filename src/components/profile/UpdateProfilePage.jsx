@@ -19,25 +19,24 @@ const UpdateProfilePage = () => {
   });
 
   useEffect(() => {
+    const fetchUserProfile = async () => {
+      try {
+      const response = await ApiService.getAccountDetails();
+
+      setUser(prev => ({
+        ...prev,
+        name: response.data.name,
+        phoneNumber: response.data.phoneNumber || ""
+      }));
+      } catch (error) {
+      showError(error.response?.data?.message || "Failed to fetch profile");
+      } finally {
+      setLoading(false);
+      }
+    };
+
     fetchUserProfile();
-  }, []);
-
-  const fetchUserProfile = async () => {
-    try {
-    const response = await ApiService.getAccountDetails();
-
-    setUser(prev => ({
-      ...prev,
-      name: response.data.name,
-      phoneNumber: response.data.phoneNumber || ""
-    }));
-    } catch (error) {
-    showError(error.response?.data?.message || "Failed to fetch profile");
-    } finally {
-    setLoading(false);
-    }
-  };
-
+  }, [showError]);
 
   const handleChange = (e) => {
     const {name, value} = e.target;

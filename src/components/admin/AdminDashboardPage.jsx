@@ -23,46 +23,45 @@ const AdminDashboardPage = () => {
   const flightSize = 10;
 
   useEffect(() => {
+    const fetchAirports = async () => {
+      try {
+        const airportsRes = await ApiService.getAllAirports();
+        setAirports(airportsRes.data || [])
+      } catch (error) {
+        showError(error.response?.data?.message || "Failed to fetch airports");
+      } finally {
+        setLoading(false);
+      }
+    };
+
     fetchAirports();
-  }, []);
+  }, [showError]);
 
   useEffect(() => {
+    const fetchBookings = async () => {
+      try {
+        const bookingsRes = await ApiService.getAllBookings(bookingPage, bookingSize);
+        setBookings(bookingsRes.data || [])
+      } catch (error) {
+        showError(error.response?.data?.message || "Failed to fetch bookings");
+      }
+    }
+
     fetchBookings();
-  }, [bookingPage]);
+  }, [bookingPage, showError]);
 
   useEffect(() => {
+    const fetchFlights = async () => {
+      try {
+        const flightsRes = await ApiService.getAllFlights(flightPage, flightSize);
+        setFlights(flightsRes.data || [])
+      } catch (error) {
+        showError(error.response?.data?.message || "Failed to fetch flights");
+      }
+    }
+
     fetchFlights();
-  }, [flightPage]);
-
-
-  const fetchAirports = async () => {
-    try {
-      const airportsRes = await ApiService.getAllAirports();
-      setAirports(airportsRes.data || [])
-    } catch (error) {
-      showError(error.response?.data?.message || "Failed to fetch airports");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const fetchBookings = async () => {
-    try {
-      const bookingsRes = await ApiService.getAllBookings(bookingPage, bookingSize);
-      setBookings(bookingsRes.data || [])
-    } catch (error) {
-      showError(error.response?.data?.message || "Failed to fetch bookings");
-    }
-  }
-
-  const fetchFlights = async () => {
-    try {
-      const flightsRes = await ApiService.getAllFlights(flightPage, flightSize);
-      setFlights(flightsRes.data || [])
-    } catch (error) {
-      showError(error.response?.data?.message || "Failed to fetch flights");
-    }
-  }
+  }, [flightPage, showError]);
 
   const formatDate = (dateTime) => {
     return new Date(dateTime).toLocaleDateString([], {

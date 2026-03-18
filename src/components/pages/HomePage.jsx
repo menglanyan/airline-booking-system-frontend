@@ -34,7 +34,7 @@ const HomePage = () => {
     }
 
     fetchAirports();
-  }, []);
+  }, [showError]);
 
   const handleSearch = async (e) => {
     e.preventDefault();

@@ -26,6 +26,18 @@ const BookingPage = () => {
   ]);
 
   useEffect(() => {
+    const fetchFlightDetails = async () => {
+      try {
+        setLoading(true);
+        const response = await ApiService.getFlightById(flightId);
+        setFlight(response.data);
+        generateAvailableSeats(response.data);
+      } catch (error) {
+        showError(error.response?.data?.message || "Failed to fetch flight details");
+      } finally {
+        setLoading(false);
+      }
+    };
 
     if (state?.flight) {
       console.log("Flight Found From State");
@@ -37,20 +49,7 @@ const BookingPage = () => {
       fetchFlightDetails();
     }
 
-  }, [flightId]);
-
-  const fetchFlightDetails = async () => {
-    try {
-      setLoading(true);
-      const response = await ApiService.getFlightById(flightId);
-      setFlight(response.data);
-      generateAvailableSeats(response.data);
-    } catch (error) {
-      showError(error.response?.data?.message || "Failed to fetch flight details");
-    } finally {
-      setLoading(false);
-    }
-  };
+  }, [flightId, state?.flight, showError]);
   
   const generateAvailableSeats = (flightData) => {
     const seats = [];

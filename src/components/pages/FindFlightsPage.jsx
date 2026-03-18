@@ -33,9 +33,27 @@ const FindFlightsPage = () => {
     }
 
     fetchAirports();
-  }, []);
+  }, [showError]);
 
   useEffect(() => {
+    const fetchFlights = async (initialParams) => {
+        try {
+            setLoading(true);
+
+            const response = await ApiService.searchForFlight(
+                initialParams.departureIataCode,
+                initialParams.arrivalIataCode,
+                initialParams.departureDate
+            );
+
+            setFlights(response.data);
+        } catch (error) {
+            showError(error.response?.data?.message || "Failed to fetch flights");
+        } finally {
+            setLoading(false);
+        }
+    }
+
     const params = new URLSearchParams(location.search);
     const initialParams = {
       departureIataCode: params.get("departureIataCode") || "",
@@ -51,26 +69,7 @@ const FindFlightsPage = () => {
       setLoading(false);
     }
 
-  }, [location]);
-
-
-  const fetchFlights = async (initialParams) => {
-    try {
-      setLoading(true);
-
-      const response = await ApiService.searchForFlight(
-        initialParams.departureIataCode,
-        initialParams.arrivalIataCode,
-        initialParams.departureDate
-      );
-
-      setFlights(response.data);
-    } catch (error) {
-      showError(error.response?.data?.message || "Failed to fetch flights");
-    } finally {
-      setLoading(false);
-    }
-  }
+  }, [location, showError]);
 
   const handleSearch = (e) => {
     e.preventDefault();

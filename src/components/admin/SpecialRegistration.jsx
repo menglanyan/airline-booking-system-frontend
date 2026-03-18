@@ -6,7 +6,7 @@ import { useMessage } from "../common/MessageDisplay";
 
 const SpecialRegistration = () => {
 
-  const { ErrorDisplay, SuccessDisplay, showError, showSuccess } = useMessage();
+  const { ErrorDisplay, SuccessDisplay, showError } = useMessage();
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({

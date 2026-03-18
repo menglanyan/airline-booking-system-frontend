@@ -19,33 +19,31 @@ const AddEditAirportPage = () => {
   const [isEditMode, setIsEditMode] = useState(false);
 
   useEffect(() => {
-   
+    const fetchData = async () => {
+      try {
+      const [citiesRes, countriesRes] = await Promise.all([
+        ApiService.getAllCities(),
+        ApiService.getAllCountries()
+      ]);
+
+      setCities(citiesRes.data || []);
+      setCountries(countriesRes.data || []);
+
+      if (id) {
+        const airportRes = await ApiService.getAirportByID(id);
+        setAirport(airportRes.data);
+        setIsEditMode(true);
+      }
+
+    } catch (error) {
+      showError(error.response?.data?.message || "Failed to fetch data");
+    } finally {
+      setLoading(false);
+    }
+    };
+
     fetchData();
-
-  }, [id]);
-
-  const fetchData = async () => {
-    try {
-     const [citiesRes, countriesRes] = await Promise.all([
-      ApiService.getAllCities(),
-      ApiService.getAllCountries()
-     ]);
-
-     setCities(citiesRes.data || []);
-     setCountries(countriesRes.data || []);
-
-     if (id) {
-      const airportRes = await ApiService.getAirportByID(id);
-      setAirport(airportRes.data);
-      setIsEditMode(true);
-     }
-
-   } catch (error) {
-     showError(error.response?.data?.message || "Failed to fetch data");
-   } finally {
-     setLoading(false);
-   }
-  };
+  }, [id, showError]);
 
   const handleChange = (e) => {
     const {name, value} = e.target;

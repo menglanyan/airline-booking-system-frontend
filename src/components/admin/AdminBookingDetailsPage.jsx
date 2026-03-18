@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useMessage } from "../common/MessageDisplay";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import ApiService from "../../services/ApiService";
 
 const AdminBookingDetailsPage = () => {
@@ -12,11 +12,7 @@ const AdminBookingDetailsPage = () => {
   const [loading, setLoading] = useState(true);
   const [selectedStatus, setSelectedStatus] =useState("");
 
-  useEffect(() => {
-    fetchBookingDetails();
-  }, [id]);
-
-  const fetchBookingDetails = async () => {
+  const fetchBookingDetails = useCallback(async () => {
     try {
       const response = await ApiService.getBookingById(id);
       setBooking(response.data);
@@ -26,7 +22,11 @@ const AdminBookingDetailsPage = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [id, showError]);
+
+  useEffect(() => {
+    fetchBookingDetails();
+  }, [fetchBookingDetails]);
 
   const handleStatusChange = async () => {
     try {

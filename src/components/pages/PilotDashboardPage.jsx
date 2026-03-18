@@ -1,4 +1,4 @@
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useMessage } from "../common/MessageDisplay";
 import { useEffect, useState } from "react";
 import ApiService from "../../services/ApiService";
@@ -12,21 +12,21 @@ const PilotDashboardPage = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchAllData();
-  }, []);
+    const fetchAllData = async () => {
+      try {
+        const pilotsRes = await ApiService.getAllPilots();
+        const myFlightsRes = await ApiService.getMyFlights();
+        setPilots(pilotsRes.data || []);
+        setMyFlights(myFlightsRes.data || []);
+      } catch (error) {
+        showError(error.response?.data?.message || "Failed to fetch all pilots");
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  const fetchAllData = async () => {
-    try {
-      const pilotsRes = await ApiService.getAllPilots();
-      const myFlightsRes = await ApiService.getMyFlights();
-      setPilots(pilotsRes.data || []);
-      setMyFlights(myFlightsRes.data || []);
-    } catch (error) {
-      showError(error.response?.data?.message || "Failed to fetch all pilots");
-    } finally {
-      setLoading(false);
-    }
-  };
+    fetchAllData();
+  }, [showError]);
 
   const formatDate = (dateTime) => {
     return new Date(dateTime).toLocaleDateString([], {

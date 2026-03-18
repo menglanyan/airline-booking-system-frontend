@@ -6,25 +6,26 @@ import ApiService from "../../services/ApiService";
 
 const BookingDetailsPage = () => {
   const {id} = useParams();
-  const {ErrorDisplay, SuccessDisplay, showError, showSuccess} = useMessage();
+  const {ErrorDisplay, SuccessDisplay, showError} = useMessage();
   const [booking, setBooking] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchBookingDetails();
-  }, [id]);
+    const fetchBookingDetails = async () => {
+        try {
+        const response = await ApiService.getBookingById(id);
+        setBooking(response.data);
+        
+        } catch (error) {
+        showError(error.response?.data?.message || "Failed to fetch booking details");
+        } finally {
+        setLoading(false);
+        }
+    };
 
-  const fetchBookingDetails = async () => {
-    try {
-      const response = await ApiService.getBookingById(id);
-      setBooking(response.data);
-      
-    } catch (error) {
-      showError(error.response?.data?.message || "Failed to fetch booking details");
-    } finally {
-      setLoading(false);
-    }
-  };
+    fetchBookingDetails();
+  }, [id, showError]);
+
 
   const formatDate = (dateTime) => {
     return new Date(dateTime).toISOString([], {

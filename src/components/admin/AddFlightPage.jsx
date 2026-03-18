@@ -22,33 +22,33 @@ const AddFlightPage = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        
+        const [airportsRes, pilotsRes] = await Promise.all([
+          ApiService.getAllAirports(), 
+          ApiService.getAllPilots()
+        ]);
+
+        setAirports(airportsRes.data || []);
+
+        // Transform pilots data to simpler format for the dropdown
+        const formattedPilots = (pilotsRes.data || []).map(pilot => ({
+          id: pilot.id,
+          name: pilot.name
+        }));
+        setPilots(formattedPilots);
+
+
+      } catch (error) {
+        showError(error.response?.data?.message || "Failed to fetch data");
+      } finally {
+        setLoading(false);
+      }
+    };
+
     fetchData();
-  }, []);
-
-  const fetchData = async () => {
-    try {
-      
-      const [airportsRes, pilotsRes] = await Promise.all([
-        ApiService.getAllAirports(), 
-        ApiService.getAllPilots()
-      ]);
-
-      setAirports(airportsRes.data || []);
-
-      // Transform pilots data to simpler format for the dropdown
-      const formattedPilots = (pilotsRes.data || []).map(pilot => ({
-        id: pilot.id,
-        name: pilot.name
-      }));
-      setPilots(formattedPilots);
-
-
-    } catch (error) {
-      showError(error.response?.data?.message || "Failed to fetch data");
-    } finally {
-      setLoading(false);
-    }
-  };
+  }, [showError]);
 
   const handleChange = (e) => {
     const {name, value} = e.target;

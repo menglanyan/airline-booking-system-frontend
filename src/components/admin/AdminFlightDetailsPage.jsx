@@ -1,6 +1,6 @@
 import { useNavigate, useParams, Link } from "react-router-dom";
 import { useMessage } from "../common/MessageDisplay";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import ApiService from "../../services/ApiService";
 
 
@@ -15,11 +15,7 @@ const AdminFlightDetailsPage = () => {
   const [selectedStatus, setSelectedStatus] = useState("");
   const [bookings, setBookings] = useState([]);
 
-  useEffect(() => {
-    fetchFlightDetails();
-  }, [id]);
-
-  const fetchFlightDetails = async () => {
+  const fetchFlightDetails = useCallback(async () => {
     try {
       
       const [flightRes, bookingsRes] = await Promise.all([
@@ -37,7 +33,11 @@ const AdminFlightDetailsPage = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [id, showError]);
+
+  useEffect(() => {
+    fetchFlightDetails();
+  }, [fetchFlightDetails]);
 
   const handleStatusChange = async () => {
     try {
