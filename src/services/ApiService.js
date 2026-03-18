@@ -3,6 +3,10 @@ import axios from "axios";
 export default class ApiService {
   static BASE_URL = "http://localhost:8082/api";
 
+  static generateIdempotencyKey() {
+    return crypto.randomUUID();
+  }
+
   static saveToken(token) {
     localStorage.setItem("token", token);
   }
@@ -119,9 +123,17 @@ export default class ApiService {
 
   // Booking api methods
   static async createBooking(body) {
-    const resp = await axios.post(`${this.BASE_URL}/bookings`, body, {
-      headers: this.getHeader()
-    });
+    const idempotencyKey = this.generateIdempotencyKey();
+    
+    const resp = await axios.post(
+      `${this.BASE_URL}/bookings`,
+      body,
+      {
+      headers: {
+        ...this.getHeader(),
+        "Idempotency-Key": idempotencyKey
+      }
+      });
     return resp.data;
   }
 
