@@ -4,7 +4,7 @@ import { useState } from "react";
 import ApiService from "../../services/ApiService";
 
 const LoginPage = () => {
-  const {ErrorDisplay, SuccessDisplay, showError, showSuccess} = useMessage();
+  const {ErrorDisplay, SuccessDisplay, showError} = useMessage();
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
