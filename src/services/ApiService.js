@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export default class ApiService {
-  static BASE_URL = "http://localhost:8082/api";
+  static BASE_URL = "https://airline-api.menglanyan.dev/api";
 
   static generateIdempotencyKey() {
     return crypto.randomUUID();
